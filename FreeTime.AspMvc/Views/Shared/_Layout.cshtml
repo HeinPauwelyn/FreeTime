@@ -1,0 +1,112 @@
+﻿@using FreeTime.WebApp.Repositories
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - FreeTime</title>
+    <link rel="shortcut icon" href="~/logo.ico" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Styles", false)
+    @RenderSection("script", false)
+
+</head>
+<body>
+    @RenderSection("belowBody", false)
+
+    <header>
+
+        @if (Request.Cookies["cookievoorwaarden"] == null)
+        {
+            <section class="warning-box">
+                <div class="container">
+                    <p>
+                        Deze site gebruikt <abbr title="Cookies zijn kleine bestanden die gebruikt worden om gegevens op te slaan op uw computer.">cookies</abbr>. Wil je deze aanvaarden?
+                        <button class="btn btn-primary" style="margin-left:20px" onclick="plaatsCookie()">Ja, ik begrijp het</button>
+                        <script>
+                            function plaatsCookie() {
+                                document.cookie = 'cookievoorwaarden=ja; Path=/';
+                                location.reload();
+                            }
+                        </script>
+                    </p>
+                </div>
+            </section>
+        }
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="~/home/index" class="navbar-brand site-title" title="Ga naar home pagina">
+                        <img src="~/Content/Pictures/LogoFreeTime.png" alt="Logo Free time (just enyoj your sport)" />
+                    </a>
+
+                </div>
+                <div class="navbar-collapse collapse">
+
+
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-clear navbar-menu">
+
+            <div class="skew-nav"></div>
+            <ul>
+                <li><a href="~/blog/Index" class="navbar-brand" title="Ga naar alle blogs">Blogs</a></li>
+                <li><a href="~/Gebruiker/Overzicht" class="navbar-brand" title="Bekijk gebruikers">Gebruikers</a></li>
+                <li>
+                    <a href="" class="navbar-brand toon-submenu">Help</a><ul class="dropdown-menu submenu">
+                        <li><a href="~/SiteInfo/Tour" title="Ga naar de verkenning pagina">Verkenning</a></li>
+                        <li><a href="~/Topic/Index?categorie=0" title="Ga naar de blogs over FreeTime">Blogs over Free Time</a></li>
+                        <li><a href="~/siteinfo/api" title="Ga naar de info pagina over onze API">API</a></li>
+                        <li><a href="~/SiteInfo/Index" title="Ga naar ons help centrum">Help centrum</a></li>
+                    </ul>
+
+                </li>
+                <li><a href="~/blog/Nieuw" class="navbar-brand" title="Maak een nieuwe activiteit aan">Nieuwe activiteit</a></li>
+            </ul>
+        </nav>
+
+    </header>
+    <main>
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer style="font-size: 0.7em !important">
+        <div class="container body-content">
+
+            <div class="row col-md-offset-4 col-md-4">
+                <h3>Sociale media</h3>
+                <hr />
+
+                <p class="text-center">
+                    <a href="http:\\www.facebook.com"><span class="fa fa-facebook fa-2x"></span></a>
+                    <a href="http:\\www.twitter.com"><span class="fa fa-twitter fa-2x"></span></a>
+                    <a href="http:\\www.instegram.com"><span class="fa fa-instagram fa-2x"></span></a>
+                    <a href="http:\\www.google.com"><span class="fa fa-google-plus fa-2x"></span></a>
+                    <a href="http:\\www.youtube.com" title="Ga naar onze Youtube kannaal"><span class="fa fa-youtube fa-2x"></span></a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementsByTagName("main")[0].style.minHeight = window.innerHeight - 387 + "px";
+    </script>
+</body>
+</html>
+
+

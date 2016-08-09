@@ -1,0 +1,87 @@
+﻿@using FreeTime.Common.Models
+@model FreeTime.WebApp.ViewModels.HomeViewModel
+
+@{
+    ViewBag.Title = "Tour pagina";
+}
+
+@section Styles  {
+    <link href="~/Content/HomePage.css" rel="stylesheet" />
+}
+
+<div class="jumbotron">
+    <h1>Welkom op FreeTime!</h1><hr />
+    <p class="lead">FreeTime is een online platform waar u kunt bloggen over extreme sporten. U kan schrijven over toffe ideeën en reizen die open staan voor alle gebruikers van FreeTime. Ondek de vier onderstaande categorieën waarover u kan bloggen.</p>
+    <div class="row">
+        @if (Model.Categories != null)
+        {
+            foreach (var item in Model.Categories)
+            {
+                if (item.CategoryId != 0)
+                {
+                    <section class="col-lg-6 categorie">
+                        <div class="image-container">
+                            <img src="~/Content/@item.Picture" class="clipped" style="@item.Style" />
+                        </div>
+                        <div class="image-hover">
+                            <h2><a href="~/Topic?categorie=@item.CategoryId&page=1">@item</a></h2>
+                            <p class="inhoud">@item.Description</p>
+                            @*<hr />
+                                <p><b>Top drie hot items</b></p>
+                                @Html.Partial("core/_TopicPoster", item.TopVijf)*@
+
+                        </div>
+                    </section>
+                }
+            }
+        }
+    </div>
+</div>
+
+<script>
+    var cats = document.getElementsByClassName('image-container');
+    var lengte = cats.length;
+
+    for (var i = 0; i < lengte; i++) {
+
+        cats[i].addEventListener('mouseover', function () {
+            var el = this.nextSibling.nextSibling;
+            el.style.display = 'block';
+            el.addEventListener('mouseover', function () {
+                this.style.display = 'block';
+            });
+        });
+
+        cats[i].addEventListener('mouseleave', function () {
+            var el = this.nextSibling.nextSibling;
+            el.style.display = 'none';
+            el.addEventListener('mouseleave', function () {
+                this.style.display = 'none';
+            });
+        });
+    }
+</script>
+
+<section class="row" style="margin-top: -40px; height: 340px;">
+
+    <article class="col-md-4 high-light">
+        <h2>Gratis</h2><hr />
+        <p>FreeTime is volledig afhangkelijk van vrijwillige donaties door geregistreerde gebruikers. Door één keer een kopje koffie te betalen kunnen we uit onze kosten komen en ons project verder ontwikkelen en onderhouden zodat u ervan kunt genietten.</p>
+        <p><a class="btn btn-default" href="#">Doneer hier vrijwillig <span class="fa fa-angle-double-right"></span></a></p>
+    </article>
+
+    <article class="col-md-4 high-light">
+        <h2>Vrije tijd</h2><hr />
+        <p>FreeTime is er voor u ideeën aan te brengen van andere gebruikers voor in uw vrije tijd. Deze kunnen comercieel gericht zijn, maar niet altijd. Kies uit ons aanbod en stem erop zodat andere gebruikers weten dat ze goede ideeën aanbregen. Of breng zelf ideeën aan en deel ze met uw vrienden of de wereld.</p>
+        <p><a class="btn btn-default" href="#">Idee aanbrengen <span class="fa fa-angle-double-right"></span></a></p>
+        <p><a class="btn btn-default" href="#">Idee zoeken <span class="fa fa-angle-double-right"></span></a></p>
+    </article>
+
+    <article class="col-md-4 high-light">
+        <h2>Sociaal</h2><hr />
+        <p>Doordat u vrienden kan opzoeken en volgen, wordt FreeTime socialer. Volg mensen of groepen en deel er uw ideeën mee. Ideaal voor een activiteit te plannen om samen te doen in uw vrije tijd. Of volg bekende groepen zoals een hobbyclub of organizaties zodat u steeds op de hoogte bent wat er gebeurt.</p>
+        <p><a class="btn btn-default" href="#">Groep zoeken <span class="fa fa-angle-double-right"></span></a></p>
+        <p><a class="btn btn-default" href="#">Mensen zoeken <span class="fa fa-angle-double-right"></span></a></p>
+    </article>
+
+</section>

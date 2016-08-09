@@ -1,0 +1,48 @@
+﻿@model FreeTime.WebApp.ViewModels.BlogIndexViewModel
+
+@{
+    ViewBag.Title = "Overzicht blogs";
+}
+
+<h1>Overzicht blogs</h1>
+<hr />
+
+@Html.Partial("core/_PageNavigator", Model)
+
+<hr/>
+
+<div class="col-md-9">
+    @foreach (var blog in Model.Blogs)
+    {
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <p>Categorie:<br />@blog.Category.Name</p>
+
+                <p>Stemmen:<br /><span class="fa-2x">@blog.CalculateTotal().ToString()</span></p>
+            </div>
+            <div class="col-md-6">
+                <h2><a href="~/blog/detail/@blog.TopicId">@blog.Title</a></h2>
+                <p>
+                    @if (blog.Text.Length > 50)
+                {
+                        @Html.Name(blog.Text.Substring(0, 50) + "...");
+                }
+                else
+                {
+                        @Html.Name(blog.Text);
+                }
+                </p>
+            </div>
+            <div class="col-md-3">
+                <p>
+                    Aangemaakt door:<br />
+                    @Html.Name(blog.User.UserName)
+                </p>
+            </div>
+        </div>
+        <hr />
+    }
+</div>
+<div class="col-md-3">
+    <p>Aside</p>
+</div>

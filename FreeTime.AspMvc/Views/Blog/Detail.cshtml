@@ -1,0 +1,72 @@
+﻿@model FreeTime.Common.Models.Blog
+
+@section script{
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $(".dark-background").css("height", $(window).innerHeight() + "px");
+
+            var hub = $.connection.votingHub;
+
+            hub.client.broadcastVoted = function (vote, id) {
+
+                var span = $("span.vote-count[data-id=" + id + "]");
+                var current = parseInt(span.html());
+
+                if (vote === "up") {
+                    span.html(current + 1);
+                }
+                else if (vote === "down") {
+                    span.html(current - 1);
+                }
+            }
+
+            hub.client.sendVoteResult = function (id, message) {
+            }
+
+            $.connection.hub.start().done(function () {
+                $(".vote").click(function () {
+                    hub.server.sendVote($(this).data("vote"), $(this).data("id"), $.connection.hub.id);
+                });
+            });
+        });
+
+    </script>
+}
+
+@section belowBody {
+    <div class="dark-background"></div>
+}
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+@Html.ActionLink("Terug naar het overzicht", "Index")
+
+<h1>@Model.Title</h1>
+<hr />
+
+<div class="col-md-9">
+    <div class="row">
+
+        <div class="col-md-3 text-center">
+            <p>Category:<br />@Model.Category.Name</p>
+            <p class="fa-2x">
+                <span class="vote fa fa-arrow-up" data-id="@Model.TopicId" data-vote="up"></span><br />
+                <span class="vote-count" data-id="@Model.TopicId">@Model.CalculateTotal()</span><br />
+                <span class="vote fa fa-arrow-down" data-id="@Model.TopicId" data-vote="down"></span><br />
+            </p>
+        </div>
+        <div class="col-md-9">
+            @Html.Raw(new MarkdownSharp.Markdown().Transform(Model.Text))
+        </div>
+
+    </div>
+</div>
+
+<div class="col-md-3"><p>Aside</p></div>
+
