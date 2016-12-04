@@ -1,4 +1,4 @@
-<img align="left" alt"logo" href="https://raw.githubusercontent.com/HeinPauwelyn/FreeTime/master/Logo/LogoFreeTime.png"/>
+<img aling="left" src="https://raw.githubusercontent.com/HeinPauwelyn/FreeTime/master/Logo/LogoFreeTime.png" width="300" >
 
 # FreeTime
 
